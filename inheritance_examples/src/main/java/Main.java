@@ -3,12 +3,12 @@ public class Main {
     public static void testArden(Arden arden) {
         arden.move();
         arden.eat();
-        arden.mainStable();
         arden.wash();
         arden.sleep();
-        arden.forageRoom();
         arden.voice();
-        arden.saddlery();
+     // arden.saddlery();
+     // arden.mainStable();
+     // arden.forageRoom();
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-public abstract class Horse implements Animal, HorseFarm {
+public abstract class Horse implements Animal{
 
         public void voice() {
         }
@@ -11,11 +11,5 @@ public abstract class Horse implements Animal, HorseFarm {
         }
         public boolean wash() {
             return true;
-        }
-        public void mainStable() {
-        }
-        public void saddlery() {
-        }
-        public void forageRoom() {
         }
 }

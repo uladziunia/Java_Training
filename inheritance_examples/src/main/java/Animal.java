@@ -1,8 +1,8 @@
- public interface Animal {
+interface Animal {
 
-    public void voice();
-    public void sleep();
-    public int move();
-    public void eat();
-    public boolean wash();
+   void voice();
+   void sleep();
+   int move();
+   void eat();
+   boolean wash();
 }
