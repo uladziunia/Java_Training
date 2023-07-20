@@ -1,44 +1,24 @@
-public class Arden extends Horse {
-    //Horse horse = new Horse() {
+import java.util.*;
 
-//        @Override
-//        public void voice() {
-//            System.out.println("The Horse voices: iii aaa");
-//        }
-//
-//        @Override
-//        public void sleep() {
-//            System.out.println("The Horse sleeps: Hrrr Hrrr");
-//        }
-//
-//        @Override
-//        public int move() {
-//            //System.out.println("The Horse mooves: Tup Tup Tup");
-//            return 0;
-//        }
-//
-//        @Override
-//        public void eat() {
-//            System.out.println("The Horse eats: Am am am");
-//        }
-//
-//        @Override
-//        public boolean wash() {
-//            return true;
-//        }
-//
-//        @Override
-//        public void mainStable() {
-//            System.out.println("The Horse is in: mainStable");
-//        }
-//
-//        @Override
-//        public void saddlery() {
-//            System.out.println("The Horse is in: saddlery");
-//        }
-//
-//        @Override
-//        public void forageRoom() {
-//            System.out.println("The Horse is in: forageRoom");
-//        }
+public class Arden extends Horse {
+
+    List<String> listStringsArdenColors = new ArrayList<String>();
+    listStringsArdenColors.add("Bay");
+    listStringsArdenColors.add("Chestnut");
+    listStringsArdenColors.add("Gray");
+    listStringsArdenColors.add("Black");
+
+    String ArrayList = listStringsArdenColors.get(3);
+
+    System.out.println("Size of the list is: "+listStringsArdenColors.size());
+    String getArrayList = (String)listStringsArdenColors.get(0);
+    System.out.println("First elements from the list is: "+listStringsArdenColors.;
+
+//   ardenColors = [bay, chestnut, gray, black];
+    {
+        setVoice("I am a speaking Horse Arden");
+        setColor("chestnut");
+        setHeight(166);
+    }
+
 }
