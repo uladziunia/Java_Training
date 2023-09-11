@@ -1,25 +1,14 @@
 package org.example.bankaccount;
 
-import java.util.List;
-
 public class User {
-    int IDUser;
+
     String login;
     String password;
-    List<String> userLogin;
 
-    public User(int IDUser, String login, String password, int userLogin) {
-        this.IDUser = IDUser;
+    public User(String login, String password)
+    {
         this.login = login;
         this.password = password;
-    }
-
-    public int getIDUser() {
-        return IDUser;
-    }
-
-    public void setIDUser(int IDUser) {
-        this.IDUser = IDUser;
     }
 
     public String getLogin() {

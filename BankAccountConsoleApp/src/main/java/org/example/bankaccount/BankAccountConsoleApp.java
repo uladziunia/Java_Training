@@ -2,33 +2,54 @@ package org.example.bankaccount;
 
 import java.util.Scanner;
 
-public class BankAccountConsoleApp {
+public class BankAccountConsoleApp<login> {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        User user = new User(1, "Krzysztof", "Kolumb", 01);
-        AccountDetails accountDetails = new AccountDetails();
-        accountDetails.getAccount();
-        accountDetails.setAccount(98150);
+//Let's prepare our one-user database ;)
+        UserAccount userAccountDetails = new UserAccount();
+
+//        User currentUser = new User;//("Krzysztof", "Kolumb", 01);
+        System.out.println("Welcome to SuperCredit Bank Application.");
+        System.out.println("Please sign in. Enter your credentials.");
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Sign in. Enter your username or ID - e.g.: user@bank.com / QPA220");
+        System.out.print("Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
 
-        String username = scanner.nextLine();
-        System.out.println("Welcome " + username + " Enter your password.");
+        if (!userAccountDetails.checkCredentials(login, password)) {
+            userAccountDetails.setUnsuccesfullLogin();
+            System.out.println("Authentication failed ! Exiting ...");
+        } else {
+            System.out.println("Welcome to SuperCredit Bank.");
+            System.out.println("Hello "+userAccountDetails.getUserInfo(login));
+            userAccountDetails.setSuccesfullLogin();
 
-        scanner.nextLine();
-        System.out.println("Welcome " + username + " in BankAccountConsoleApp");
-        System.out.println();
+//        System.out.println(userAccountDetails.userName);
 
+            {
+                System.out.print("Select options:\n1 = First\n2 = Second\n3 = End Program\n>> ");
+            }
+            {
+                System.out.println("On your profile you can: View/Edit/Close details");
+            }
 
-        {
-            System.out.print("Select options:\n1 = First\n2 = Second\n3 = End Program\n>> ");
-        }
+//        try {
+//            login.equals(currentUser.getLogin());
+//            System.out.println("Your login is correct");
+//        } catch (Exception e) {
+//            System.out.println("Your login is not correct");
+//        }
+//        try {
+//            password.equals(currentUser.getPassword());
+//            System.out.println("Your password is correct");
+//        } catch (Exception e) {
+//            System.out.println("Your password is not correct");
+//        }
 
-        {
             int numberOfOption;
-
             do {
                 showMenu();
                 numberOfOption = scanner.nextInt();
@@ -39,23 +60,12 @@ public class BankAccountConsoleApp {
                     case 2:
                         secondOption();
                         break;
-                        }
                 }
+            }
             while (numberOfOption != 3);
-                System.out.println("The third option has been selected. Program ends.");
-                 }
-
-        String login = "Krzysztof";
-        if (login=="Krszysztof")
-        {
-            System.out.println("Login successful");
+            System.out.println("The third option has been selected. Exiting...");
         }
-//        if (accountDetails != username)
-//        {
-//            System.out.println("You profile: view/edit/close");
-//        }
-
-      }
+    }
 
     private static void accountDetails() {
     }
@@ -67,5 +77,8 @@ public class BankAccountConsoleApp {
     }
 
     private static void secondOption() {
+    }
+
+    private static class Login {
     }
 }
