@@ -2,14 +2,13 @@ package org.example.bankaccount;
 
 import java.util.Scanner;
 
-public class BankAccountConsoleApp<login> {
+public class BankAccountConsoleApp {
 
     public static void main(String[] args) throws InterruptedException {
 
 //Let's prepare our one-user database ;)
         UserAccount userAccountDetails = new UserAccount();
 
-//        User currentUser = new User;//("Krzysztof", "Kolumb", 01);
         System.out.println("Welcome to SuperCredit Bank Application.");
         System.out.println("Please sign in. Enter your credentials.");
 
@@ -20,14 +19,12 @@ public class BankAccountConsoleApp<login> {
         String password = scanner.nextLine();
 
         if (!userAccountDetails.checkCredentials(login, password)) {
-            userAccountDetails.setUnsuccesfullLogin();
+            userAccountDetails.setUnsuccessfulLogin();
             System.out.println("Authentication failed ! Exiting ...");
         } else {
             System.out.println("Welcome to SuperCredit Bank.");
             System.out.println("Hello "+userAccountDetails.getUserInfo(login));
-            userAccountDetails.setSuccesfullLogin();
-
-//        System.out.println(userAccountDetails.userName);
+            userAccountDetails.setSuccessfulLogin();
 
             {
                 System.out.print("Select options:\n1 = First\n2 = Second\n3 = End Program\n>> ");
@@ -67,9 +64,6 @@ public class BankAccountConsoleApp<login> {
         }
     }
 
-    private static void accountDetails() {
-    }
-
     private static void showMenu() {
     }
 
@@ -77,8 +71,5 @@ public class BankAccountConsoleApp<login> {
     }
 
     private static void secondOption() {
-    }
-
-    private static class Login {
     }
 }

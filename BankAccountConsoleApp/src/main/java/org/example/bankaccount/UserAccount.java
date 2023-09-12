@@ -7,12 +7,12 @@ public class UserAccount {
     private int userID = 9815;
     private String userFirstName = "Krzysztof";
     private String userLastName = "Kolumb";
-//    private String userLogin = userFirstName.substring(0,3).toLowerCase(Locale.ROOT)+ userLastName.substring(0,3).toLowerCase(Locale.ROOT)+ userID;
+//  private String userLogin = userFirstName.substring(0,3).toLowerCase(Locale.ROOT)+ userLastName.substring(0,3).toLowerCase(Locale.ROOT)+ userID;
     private String userLogin = userFirstName.substring(0, 3).toLowerCase() + userLastName.substring(0, 3).toLowerCase() + userID;
     private String userEMail = userLogin + "@company.com";
     private String userPassword = "ququlka";
-    private LocalDateTime lastSuccesfullLogin = LocalDateTime.parse("2023-09-11T10:15:30");
-    private LocalDateTime lastUnsuccesfullLogin = LocalDateTime.parse("2023-08-12T13:25:30");
+    private LocalDateTime lastSuccessfulLogin = LocalDateTime.parse("2023-09-11T10:15:30");
+    private LocalDateTime lastUnsuccessfulLogin = LocalDateTime.parse("2023-08-12T13:25:30");
 
     private String accountDetails() {
         System.out.println("On your profile you can: view/edit/close details");
@@ -29,14 +29,14 @@ public class UserAccount {
     }
 
     public String getUserInfo(String _userLogin) {
-        return (userFirstName + " " + userLastName + " (" + userEMail + ")\nLast succesfull login: " + lastSuccesfullLogin + "\nLast unsuccesfull login: " + lastUnsuccesfullLogin);
+        return (userFirstName + " " + userLastName + " (" + userEMail + ")\nLast successful login: " + lastSuccessfulLogin + "\nLast unsuccessful login: " + lastUnsuccessfulLogin);
     }
 
-    public void setSuccesfullLogin() {
-        lastSuccesfullLogin = LocalDateTime.now();
+    public void setSuccessfulLogin() {
+        lastSuccessfulLogin = LocalDateTime.now();
     }
 
-    public void setUnsuccesfullLogin() {
-        lastUnsuccesfullLogin = LocalDateTime.now();
+    public void setUnsuccessfulLogin() {
+        lastUnsuccessfulLogin = LocalDateTime.now();
     }
 }
