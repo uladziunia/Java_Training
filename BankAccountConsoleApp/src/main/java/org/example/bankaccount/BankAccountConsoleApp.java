@@ -1,75 +1,130 @@
 package org.example.bankaccount;
 
+import java.io.Console;
 import java.util.Scanner;
 
 public class BankAccountConsoleApp {
 
-    public static void main(String[] args) throws InterruptedException {
+    static Scanner scanner = new Scanner(System.in);
+    static boolean loggedIn = false;
 
-//Let's prepare our one-user database ;)
+    public static void main(String[] args) {
+//      Let's prepare our one-user database ;)
         UserAccount userAccountDetails = new UserAccount();
 
-        System.out.println("Welcome to SuperCredit Bank Application.");
-        System.out.println("Please sign in. Enter your credentials.");
+        System.out.println("********************************************");
+        System.out.println("* Welcome to SuperCredit Bank Application. *");
+        System.out.println("********************************************");
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Login: ");
-        String login = scanner.nextLine();
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-
-        if (!userAccountDetails.checkCredentials(login, password)) {
-            userAccountDetails.setUnsuccessfulLogin();
-            System.out.println("Authentication failed ! Exiting ...");
-        } else {
-            System.out.println("Welcome to SuperCredit Bank.");
-            System.out.println("Hello "+userAccountDetails.getUserInfo(login));
-            userAccountDetails.setSuccessfulLogin();
-
-            {
-                System.out.print("Select options:\n1 = First\n2 = Second\n3 = End Program\n>> ");
-            }
-            {
-                System.out.println("On your profile you can: View/Edit/Close details");
-            }
-
-//        try {
-//            login.equals(currentUser.getLogin());
-//            System.out.println("Your login is correct");
-//        } catch (Exception e) {
-//            System.out.println("Your login is not correct");
-//        }
-//        try {
-//            password.equals(currentUser.getPassword());
-//            System.out.println("Your password is correct");
-//        } catch (Exception e) {
-//            System.out.println("Your password is not correct");
-//        }
-
-            int numberOfOption;
-            do {
-                showMenu();
-                numberOfOption = scanner.nextInt();
-                switch (numberOfOption) {
+        int menuSelector;
+        mainLoop:
+        do {
+            showMenu();
+            menuSelector = scanner.nextInt();
+            scanner.nextLine();
+            if (!loggedIn) {
+                switch (menuSelector) {
                     case 1:
-                        firstOption();
+                        loggedIn = loginProcedure(userAccountDetails);
                         break;
                     case 2:
-                        secondOption();
+                        forgotPassword(userAccountDetails);
+                        break;
+                    case 3:
+                        break mainLoop;
+                }
+            } else {
+                switch (menuSelector) {
+                    case 1:
+                        userAccountDetails();
+                        break;
+                    case 2:
+                        accountBalance();
+                        break;
+                    case 3:
+                        changePassword(userAccountDetails);
+                        break;
+                    case 4:
+                        loggedIn = logoutProcedure(userAccountDetails);
                         break;
                 }
             }
-            while (numberOfOption != 3);
-            System.out.println("The third option has been selected. Exiting...");
         }
+        while (true);
+
+        System.out.println("******************************************************");
+        System.out.println("* You have exited from SuperCredit Bank Application. *");
+        System.out.println("******************************************************");
     }
 
     private static void showMenu() {
+        if (loggedIn) {
+            System.out.print("Select options:\n1 = userAccountDetails\n2 = accountBalance\n3 = changePassword\n4 = logout\n>>");
+        } else {
+            System.out.print("Select options:\n1 = Login to your account\n2 = Forgot your password?\n3 = Exit\n>>");
+        }
     }
 
-    private static void firstOption() {
+    public static boolean loginProcedure(UserAccount userAccountDetails) {
+        System.out.println("Please sign in. Enter your credentials.");
+        Console console = System.console();
+        String login;
+        String password;
+        if (console == null) {
+            System.out.print("Enter username: ");
+            login = scanner.nextLine();
+            System.out.print("Enter password: ");
+            password = scanner.nextLine();
+        } else {
+            login = console.readLine("Enter username: ");
+            password = new String(console.readPassword("Enter password: "));
+        }
+        if (!userAccountDetails.checkCredentials(login, password)) {
+            userAccountDetails.setUnsuccessfulLogin();
+            System.out.println("Authentication failed!");
+            return false;
+        } else {
+            userAccountDetails.setSuccessfulLogin();
+            System.out.println("Hello " + userAccountDetails.getUserInfo(login));
+            return true;
+        }
     }
 
-    private static void secondOption() {
+    public static boolean logoutProcedure(UserAccount userAccountDetails) {
+        System.out.println("You have logged out successfully.");
+        return false;
+    }
+
+    private static void forgotPassword(UserAccount userAccountDetails) {
+//To Do
+    }
+
+    private static void changePassword(UserAccount userAccountDetails) {
+        System.out.print("Enter current password: ");
+        String password = scanner.nextLine();
+        if (userAccountDetails.checkCredentials(userAccountDetails.getUserLogin(), password)) {
+            System.out.print("Enter new password: ");
+            String password1 = scanner.nextLine();
+            System.out.print("Repeat new password: ");
+            String password2 = scanner.nextLine();
+            if (!password1.equals(password2)) {
+                System.out.println("The passwords do not match.");
+            } else {
+                if (password.equals(password2)) {
+                    System.out.println("New password should be different than old one.");
+                } else {
+                    userAccountDetails.setUserPassword(password1);
+                    System.out.println("Your password has been changed.");
+                }
+            }
+        } else {
+            System.out.println("You have entered wrong password.");
+        }
+    }
+
+    private static void accountBalance() {
+    }
+
+    private static void userAccountDetails() {
     }
 }

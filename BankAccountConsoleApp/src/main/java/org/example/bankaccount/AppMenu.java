@@ -8,5 +8,4 @@ public class AppMenu {
     {
         int getAppMenu = appMenu.getAppMenu;
     }
-
 }
