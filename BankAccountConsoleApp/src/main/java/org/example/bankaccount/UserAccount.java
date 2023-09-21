@@ -1,45 +1,89 @@
 package org.example.bankaccount;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class UserAccount {
 
-    private int userID = 1111;
-    private String userFirstName = "Krzysztof";
-    private String userLastName = "Kolumb";
-    private String userLogin = userFirstName.substring(0, 3).toLowerCase() + userLastName.substring(0, 3).toLowerCase() + userID;
-    private String userEMail = userLogin + "@company.com";
-    private String userPassword = "ququ";
-    private boolean forceChangePassword = false;
-    private LocalDateTime lastSuccessfulLogin = LocalDateTime.parse("2023-09-11T10:15:30");
-    private LocalDateTime lastUnsuccessfulLogin = LocalDateTime.parse("2023-08-12T13:25:30");
+    private int userID = 0;
+    private String userFirstName = "XXX";
+    private String userLastName = "YYY";
+    private String userLogin;
+    private String userEMail;
+    private String userPassword = UUID.randomUUID().toString();
+//    private boolean forceChangePassword = false;
+    private LocalDateTime lastSuccessfulLoginDateTime;
+    private LocalDateTime lastUnsuccessfulLoginDateTime;
     private Double accountBalance;
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+        setUserLogin();
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+        setUserLogin();
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+        setUserLogin();
+    }
 
     public String getUserLogin() {
         return userLogin;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setUserLogin() {
+        this.userLogin = this.userFirstName.substring(0, 3).toLowerCase() + this.userLastName.substring(0, 3).toLowerCase() + this.userID;
+        setUserEMail();
     }
 
-    private String accountDetails() {
-       return accountDetails();
+    public String getUserEMail() {
+        return userEMail;
     }
 
-    public boolean checkCredentials(String _userLogin, String _userPassword) {
-        return ((_userLogin.equalsIgnoreCase(userLogin)) && (_userPassword.equalsIgnoreCase(userPassword)));
+    public void setUserEMail() {
+        this.userEMail = this.userLogin + "@company.com";
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String _userPassword) {
+        this.userPassword = _userPassword;
     }
 
     public String getUserInfo(String _userLogin) {
-        return (userFirstName + " " + userLastName + " (" + userEMail + ")\nLast successful login: " + lastSuccessfulLogin + "\nLast unsuccessful login: " + lastUnsuccessfulLogin);
+        if (_userLogin.equals(userLogin)) {
+//            addToLogger(ltInfo, "getUserInfo", _userLogin);
+            return (userFirstName + " " + userLastName + " (" + userEMail + ")\nLast successful login: " + this.lastSuccessfulLoginDateTime + "\nLast unsuccessful login: " + this.lastUnsuccessfulLoginDateTime);
+        } else {
+//            addToLogger(ltError, "getUserInfo", "Unknown login:"+_userLogin);
+            return ("Unknown user.");
+        }
     }
 
-    public void setSuccessfulLogin() {
-        lastSuccessfulLogin = LocalDateTime.now();
+    public void setSuccessfulLoginDateTime() {
+        lastSuccessfulLoginDateTime = LocalDateTime.now();
     }
-    public void setUnsuccessfulLogin() {
-        lastUnsuccessfulLogin = LocalDateTime.now();
+
+    public void setUnSuccessfulLoginDateTime() {
+        lastUnsuccessfulLoginDateTime = LocalDateTime.now();
     }
 
     public Double getAccountBalance() {
@@ -49,8 +93,5 @@ public class UserAccount {
     public void setAccountBalance(Double accountBalance) {
         this.accountBalance = accountBalance;
     }
-    //    public void logout() {
-//        System.out.println("You have safely logged out of SuperCredit Bank Application.");
-//    }
 
 }

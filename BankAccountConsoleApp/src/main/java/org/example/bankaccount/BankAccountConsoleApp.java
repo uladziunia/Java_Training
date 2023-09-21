@@ -7,10 +7,11 @@ public class BankAccountConsoleApp {
 
     static Scanner scanner = new Scanner(System.in);
     static boolean loggedIn = false;
+    static int loggedUserIdx = -1;
 
     public static void main(String[] args) {
-//      Let's prepare our one-user database ;)
-        UserAccount userAccountDetails = new UserAccount();
+//      Let's prepare our two-users "database" ;)
+        UserAccounts.initUsersPseudoDB();
 
         System.out.println("********************************************");
         System.out.println("* Welcome to SuperCredit Bank Application. *");
@@ -25,10 +26,10 @@ public class BankAccountConsoleApp {
             if (!loggedIn) {
                 switch (menuSelector) {
                     case 1:
-                        loggedIn = loginProcedure(userAccountDetails);
+                        loggedIn = loginProcedure();
                         break;
                     case 2:
-                        forgotPassword(userAccountDetails);
+                        forgotPassword();
                         break;
                     case 3:
                         break mainLoop;
@@ -42,10 +43,10 @@ public class BankAccountConsoleApp {
                         accountBalance();
                         break;
                     case 3:
-                        changePassword(userAccountDetails);
+                        changePassword();
                         break;
                     case 4:
-                        loggedIn = logoutProcedure(userAccountDetails);
+                        loggedIn = logoutProcedure();
                         break;
                 }
             }
@@ -65,7 +66,7 @@ public class BankAccountConsoleApp {
         }
     }
 
-    public static boolean loginProcedure(UserAccount userAccountDetails) {
+    public static boolean loginProcedure() {
         System.out.println("Please sign in. Enter your credentials.");
         Console console = System.console();
         String login;
@@ -79,30 +80,48 @@ public class BankAccountConsoleApp {
             login = console.readLine("Enter username: ");
             password = new String(console.readPassword("Enter password: "));
         }
-        if (!userAccountDetails.checkCredentials(login, password)) {
-            userAccountDetails.setUnsuccessfulLogin();
-            System.out.println("Authentication failed!");
+
+        if (!UserAccounts.proceedLoginWithCredentials(login, password)) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            System.out.println("! Authentication failed! !");
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            loggedUserIdx = -1;
             return false;
         } else {
-            userAccountDetails.setSuccessfulLogin();
-            System.out.println("Hello " + userAccountDetails.getUserInfo(login));
+            System.out.println("Hello " + UserAccounts.getUserInfo(login));
+            loggedUserIdx = UserAccounts.getUserIndex(login);
             return true;
         }
     }
+/*
+        if (!userAccountDetails.checkCredentials(login, password)) {
+            userAccountDetails.setUnsuccessfulLoginDateTime();
+            System.out.println("Authentication failed!");
+            return false;
+        } else {
+            userAccountDetails.setSuccessfulLoginDateTime();
+            System.out.println("Hello " + userAccountDetails.getUserInfo(login));
+            return true;
+        }
+ */
 
-    public static boolean logoutProcedure(UserAccount userAccountDetails) {
-        System.out.println("You have logged out successfully.");
+    public static boolean logoutProcedure() {
+        System.out.println("#####################################");
+        System.out.println("# You have logged out successfully. #");
+        System.out.println("#####################################");
+        loggedUserIdx = -1;
         return false;
     }
 
-    private static void forgotPassword(UserAccount userAccountDetails) {
-//To Do
+    private static void forgotPassword() {
+        System.out.print("Enter username: ");
+        String login = scanner.nextLine();
     }
 
-    private static void changePassword(UserAccount userAccountDetails) {
+    private static void changePassword() {
         System.out.print("Enter current password: ");
         String password = scanner.nextLine();
-        if (userAccountDetails.checkCredentials(userAccountDetails.getUserLogin(), password)) {
+        if (UserAccounts.checkCredentials(UserAccounts.getUserLogin(loggedUserIdx), password)) {
             System.out.print("Enter new password: ");
             String password1 = scanner.nextLine();
             System.out.print("Repeat new password: ");
@@ -113,12 +132,14 @@ public class BankAccountConsoleApp {
                 if (password.equals(password2)) {
                     System.out.println("New password should be different than old one.");
                 } else {
-                    userAccountDetails.setUserPassword(password1);
-                    System.out.println("Your password has been changed.");
+                    UserAccounts.setUserPassword(loggedUserIdx, password1);
+                    System.out.println("***********************************");
+                    System.out.println("* Your password has been changed. *");
+                    System.out.println("***********************************");
                 }
             }
         } else {
-            System.out.println("You have entered wrong password.");
+            System.out.println("You have entered wrong password!");
         }
     }
 
